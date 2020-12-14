@@ -63,9 +63,9 @@ echo -e "initializing variables..." \
 echo -e "done......\n" \
      
 echo -e "setting up.......\n" \ 
-mkdir -p ~/bin \
-curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo \ 
-chmod a+x ~/bin/repo \
+mkdir -p ~/bin
+curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
+chmod a+x ~/bin/repo
 export PATH=~/bin:$PATH
 
 # go get -u github.com/tcnksm/ghr
