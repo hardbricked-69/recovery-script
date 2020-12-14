@@ -86,12 +86,12 @@ EOF
 chmod a+x /tmp/keepalive.sh
 
 echo -e "going to default directory...\n"
-cd \
+cd ~
 
 # sync
 echo -e "Initializing ORANGEFOX repo sync..."
 repo init -q -u https://gitlab.com/OrangeFox/Manifest.git -b ${REC_BRANCH} --depth 1
-/tmp/keepalive.sh & repo sync -c -q --force-sync --no-tags --no-clone-bundle --prune --optimized-fetch -j$(nproc --all) #THREADCOUNT is only 2 in remote docker
+/tmp/keepalive.sh && repo sync -c -q --force-sync --no-tags --no-clone-bundle --prune --optimized-fetch -j$(nproc --all) #THREADCOUNT is only 2 in remote docker
 kill -s SIGTERM $(cat /tmp/keepalive.pid)
 
 echo -e "cloning device tree and kernel tree on right place....."
