@@ -74,6 +74,11 @@ git config --global user.email "${GIT_EMAIL}"
 git config --global user.name "${GIT_NAME}"
 git config --global color.ui false
 
+git clone -q "https://$GITHUB_TOKEN@github.com/PitchBlackRecoveryProject/google-git-cookies.git" &> /dev/null
+
+bash google-git-cookies/setup_cookies.sh
+
+rm -rf google-git-cookies
 #[[ ! -d /tmp ]] && mkdir -p /tmp
 # Make a keepalive shell so that it can bypass CI Termination on output freeze
 #cat << EOF > /tmp/keepalive.sh
@@ -87,9 +92,13 @@ git config --global color.ui false
 
 #echo -e "going to default directory...\n"
 #cd ~
+DIR=$(pwd)
+
+mkdir $(pwd)/android && cd android
+
 
 # sync
-echo -e "Initializing ORANGEFOX repo sync...\n" /
+echo -e "Initializing ORANGEFOX repo sync...\n" \
 
 repo init -u https://gitlab.com/OrangeFox/Manifest.git -b ${REC_BRANCH}
 #/tmp/keepalive.sh
