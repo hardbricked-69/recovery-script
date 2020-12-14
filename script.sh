@@ -95,14 +95,24 @@ rm -rf google-git-cookies
 DIR=$(pwd)
 
 mkdir $(pwd)/android && cd android
+# randomize and fix sync thread number, according to available cpu thread count
 
+SYNCTHREAD=$(grep -c ^processor /proc/cpuinfo)          # Default CPU Thread Count
+
+if [[ $(echo ${SYNCTHREAD}) -le 2 ]]; then SYNCTHREAD=$(shuf -i 5-7 -n 1)        # If CPU Thread >= 2, Sync Thread 5~7
+
+elif [[ $(echo ${SYNCTHREAD}) -le 8 ]]; then SYNCTHREAD=$(shuf -i 12-16 -n 1)    # If CPU Thread >= 8, Sync Thread 12~16
+
+elif [[ $(echo ${SYNCTHREAD}) -le 36 ]]; then SYNCTHREAD=$(shuf -i 30-36 -n 1)   # If CPU Thread >= 36, Sync Thread 30~36
+
+fi
 
 # sync
 echo -e "Initializing ORANGEFOX repo sync...\n" \
 
 repo init -u https://gitlab.com/OrangeFox/Manifest.git -b ${REC_BRANCH}
 #/tmp/keepalive.sh
-repo sync --force-sync -j6 #THREADCOUNT is only 2 in remote docker
+repo sync --force-sync -j${SYNCTHREAD} #THREADCOUNT is only 2 in remote docker
 #kill -s SIGTERM $(cat /tmp/keepalive.pid)
 
 echo -e "cloning device tree and kernel tree on right place....."
