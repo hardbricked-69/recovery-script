@@ -1,0 +1,28 @@
+version: 2.1
+jobs:
+  build:
+   docker:
+      - image: ubuntu:18.04
+   environment:
+      GIT_EMAIL: 'abhishek111raut@gmail.com'
+      GIT_NAME: 'abhi9960'
+      VERSION: '3.4.0'
+      TWRP_MANIFEST: 'android_9.0'
+      VENDOR: 'realme'
+      DEVICE: 'RMX1925'
+      FLAVOR: 'eng'
+      REC_BRANCH: 'fox_9.0'
+   steps:
+      - run: apt-get -y update && apt-get -y upgrade && apt install wget -y
+      - run: git config --global user.email $GIT_EMAIL
+      - run: git config --global user.name $GIT_NAME
+      - run: wget -q https://raw.githubusercontent.com/abhi9960/recovery-script/main/script.sh
+      - run: chmod +x script.sh
+      - run: source script.sh
+      
+workflows:
+  version: 2.1
+  cooking:
+     jobs:
+      - build:
+           context : abhi9960
