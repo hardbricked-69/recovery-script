@@ -58,7 +58,7 @@ if [[ -z $FLAVOR ]]; then echo -e "Set up your lunch flavor for ex.lunch omni_rm
 if [[ -z $REC_BRANCH ]]; then echo -e "set recovery branch name." && exit 1; fi
 
 echo -e "initializing variables..." \
-     -e GitHubMail="${GitHubMail}" -e GitHubName="${GitHubName}" -e GITHUB_TOKEN="${GITHUB_TOKEN}" \
+     -e GitHubMail="${GIT_EMAIL}" -e GitHubName="${GIT_NAME}" -e GITHUB_TOKEN="${GITHUB_TOKEN}" \
      -e DEVICE="${DEVICE}" -e VENDOR="${VENDOR}" -e REC_BRANCH="${REC_BRANCH}"
      
 echo -e "setting up.......\n" 
