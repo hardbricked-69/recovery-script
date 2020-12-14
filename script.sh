@@ -60,12 +60,13 @@ if [[ -z $REC_BRANCH ]]; then echo -e "set recovery branch name." && exit 1; fi
 echo -e "initializing variables..." \
      -e GitHubMail="${GIT_EMAIL}" -e GitHubName="${GIT_NAME}" -e GITHUB_TOKEN="${GITHUB_TOKEN}" \
      -e DEVICE="${DEVICE}" -e VENDOR="${VENDOR}" -e REC_BRANCH="${REC_BRANCH}"
+echo -e "done......\n" \
      
-echo -e "setting up.......\n" 
-mkdir -p ~/bin
-curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
-chmod a+x ~/bin/repo
-export PATH=/root/go/bin:$PATH
+echo -e "setting up.......\n" \ 
+mkdir -p ~/bin \
+curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo \ 
+chmod a+x ~/bin/repo \
+export PATH=~/bin:$PATH
 
 # go get -u github.com/tcnksm/ghr
 
