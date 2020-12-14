@@ -74,16 +74,16 @@ git config --global user.email "${GIT_EMAIL}"
 git config --global user.name "${GIT_NAME}"
 git config --global color.ui false
 
-[[ ! -d /tmp ]] && mkdir -p /tmp
+#[[ ! -d /tmp ]] && mkdir -p /tmp
 # Make a keepalive shell so that it can bypass CI Termination on output freeze
-cat << EOF > /tmp/keepalive.sh
+#cat << EOF > /tmp/keepalive.sh
 #!/bin/bash
-echo \$$ > /tmp/keepalive.pid # keep this so that it can be killed from other command
-while true; do
-  echo "." && sleep 300
-done
-EOF
-chmod a+x /tmp/keepalive.sh
+#echo \$$ > /tmp/keepalive.pid # keep this so that it can be killed from other command
+#while true; do
+#  echo "." && sleep 300
+#done
+#EOF
+#chmod a+x /tmp/keepalive.sh
 
 echo -e "going to default directory...\n"
 cd ~
@@ -91,8 +91,9 @@ cd ~
 # sync
 echo -e "Initializing ORANGEFOX repo sync..."
 repo init -q -u https://gitlab.com/OrangeFox/Manifest.git -b ${REC_BRANCH} --depth 1
-/tmp/keepalive.sh && repo sync -c -q --force-sync --no-tags --no-clone-bundle --prune --optimized-fetch -j$(nproc --all) #THREADCOUNT is only 2 in remote docker
-kill -s SIGTERM $(cat /tmp/keepalive.pid)
+#/tmp/keepalive.sh
+repo sync -c -q --force-sync --no-tags --no-clone-bundle --prune --optimized-fetch -j$(nproc --all) #THREADCOUNT is only 2 in remote docker
+#kill -s SIGTERM $(cat /tmp/keepalive.pid)
 
 echo -e "cloning device tree and kernel tree on right place....."
 git clone https://github.com/abhi9960/twrp_rmx1925 -b ofox device/realme/${DEVICE}
@@ -113,8 +114,9 @@ elif [[ -n $FLAVOR ]]; then
   lunch omni_${DEVICE}-${FLAVOR}
 fi
 
-/tmp/keepalive.sh & make -j$(nproc --all) recoveryimage
-kill -s SIGTERM $(cat /tmp/keepalive.pid)
+#/tmp/keepalive.sh &
+make -j$(nproc --all) recoveryimage
+#kill -s SIGTERM $(cat /tmp/keepalive.pid)
 echo -e "\nYummy Recovery is Served.....\n"
 
 echo -e "fixing conflict from noob thank uh...\n"
