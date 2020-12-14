@@ -85,14 +85,15 @@ git config --global color.ui false
 #EOF
 #chmod a+x /tmp/keepalive.sh
 
-echo -e "going to default directory...\n"
-cd ~
+#echo -e "going to default directory...\n"
+#cd ~
 
 # sync
-echo -e "Initializing ORANGEFOX repo sync..."
-repo init -q -u https://gitlab.com/OrangeFox/Manifest.git -b ${REC_BRANCH} --depth 1
+echo -e "Initializing ORANGEFOX repo sync...\n" /
+
+repo init -u https://gitlab.com/OrangeFox/Manifest.git -b ${REC_BRANCH} --depth 1
 #/tmp/keepalive.sh
-repo sync -c -q --force-sync --no-tags --no-clone-bundle --prune --optimized-fetch -j$(nproc --all) #THREADCOUNT is only 2 in remote docker
+repo sync --force-sync --no-tags --no-clone-bundle --prune --optimized-fetch -j$(nproc --all) #THREADCOUNT is only 2 in remote docker
 #kill -s SIGTERM $(cat /tmp/keepalive.pid)
 
 echo -e "cloning device tree and kernel tree on right place....."
@@ -100,14 +101,14 @@ git clone https://github.com/abhi9960/twrp_rmx1925 -b ofox device/realme/${DEVIC
 git clone https://github.com/abhi9960/kernel_realme_RMX1911 kernel/realme/${DEVICE}
 
 # See whta's inside
-echo -e "\n" && ls -lA .
+#echo -e "\n" && ls -lA .
 
-echo -e "setting up envernment for building recovery....."
+echo -e "setting up envernment for building recovery.....\n"
 export ALLOW_MISSING_DEPENDENCIES=true
 export LC_ALL=C 
 source build/envsetup.sh
 
-echo -e "finally lets cook something yummy prepare for lunch..."
+echo -e "finally lets cook something yummy prepare for lunch...\n"
 if [[ -n $BUILD_LUNCH ]]; then
   lunch ${BUILD_LUNCH}
 elif [[ -n $FLAVOR ]]; then
