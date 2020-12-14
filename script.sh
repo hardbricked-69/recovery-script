@@ -91,9 +91,9 @@ git config --global color.ui false
 # sync
 echo -e "Initializing ORANGEFOX repo sync...\n" /
 
-repo init -u https://gitlab.com/OrangeFox/Manifest.git -b ${REC_BRANCH} --depth 1
+repo init -u https://gitlab.com/OrangeFox/Manifest.git -b ${REC_BRANCH}
 #/tmp/keepalive.sh
-repo sync --force-sync --no-tags --no-clone-bundle --prune --optimized-fetch -j$(nproc --all) #THREADCOUNT is only 2 in remote docker
+repo sync --force-sync -j6 #THREADCOUNT is only 2 in remote docker
 #kill -s SIGTERM $(cat /tmp/keepalive.pid)
 
 echo -e "cloning device tree and kernel tree on right place....."
