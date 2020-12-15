@@ -73,7 +73,7 @@ export PATH=~/bin:$PATH
 echo -e "setting up github....... \n" 
 git config --global user.email "${GIT_EMAIL}"
 git config --global user.name "${GIT_NAME}"
-git config --global color.ui false
+git config --global color.ui true 
 
 git clone -q "https://$GITHUB_TOKEN@github.com/PitchBlackRecoveryProject/google-git-cookies.git" &> /dev/null
 
