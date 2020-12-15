@@ -68,14 +68,14 @@ curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
 chmod a+x ~/bin/repo
 export PATH=~/bin:$PATH
 
-# go get -u github.com/tcnksm/ghr
+go get -u github.com/tcnksm/ghr
 
-echo -e "setting up github....... \n" 
-git config --global user.email "${GIT_EMAIL}"
-git config --global user.name "${GIT_NAME}"
-git config --global color.ui true 
+#echo -e "setting up github....... \n" 
+#git config --global user.email "${GIT_EMAIL}"
+#git config --global user.name "${GIT_NAME}"
+#git config --global color.ui true 
 
-git clone -q "https://$GITHUB_TOKEN@github.com/PitchBlackRecoveryProject/google-git-cookies.git" &> /dev/null
+git clone -q https://$GITHUB_TOKEN@github.com/PitchBlackRecoveryProject/google-git-cookies.git
 
 bash google-git-cookies/setup_cookies.sh
 
