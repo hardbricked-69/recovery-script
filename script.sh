@@ -75,11 +75,11 @@ go get -u github.com/tcnksm/ghr
 #git config --global user.name "${GIT_NAME}"
 #git config --global color.ui true 
 
-git clone -q https://$GITHUB_TOKEN@github.com/PitchBlackRecoveryProject/google-git-cookies.git
+#git clone -q https://$GITHUB_TOKEN@github.com/PitchBlackRecoveryProject/google-git-cookies.git
 
-bash google-git-cookies/setup_cookies.sh
+#bash google-git-cookies/setup_cookies.sh
 
-rm -rf google-git-cookies
+#rm -rf google-git-cookies
 #[[ ! -d /tmp ]] && mkdir -p /tmp
 # Make a keepalive shell so that it can bypass CI Termination on output freeze
 #cat << EOF > /tmp/keepalive.sh
