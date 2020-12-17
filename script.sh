@@ -87,10 +87,7 @@ EOF
 chmod a+x /tmp/keepalive.sh
 
 echo -e "going to default directory...\n"
-cd \
-
-
-DIR=$(pwd)
+cd ~ && DIR=$(pwd)
 mkdir $(pwd)/ofox && cd ofox
 
 # randomize and fix sync thread number, according to available cpu thread count
