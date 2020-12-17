@@ -68,11 +68,6 @@ curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
 chmod a+x ~/bin/repo
 export PATH=~/bin:$PATH
 
-#go get -u github.com/tcnksm/ghr
-
-#echo -e "setting up github....... \n" 
-#git config --global user.email "${GIT_EMAIL}"
-#git config --global user.name "${GIT_NAME}"
 git config --global color.ui false 
 
 [[ ! -d /tmp ]] && mkdir -p /tmp
@@ -113,10 +108,7 @@ echo -e "syncing done succesfully......\n"
 
 echo -e "\n cloning device tree and kernel tree on right place.....\n"
 git clone https://github.com/abhi9960/twrp_rmx1925 -b ofox device/realme/${DEVICE}
-git clone https://github.com/abhi9960/kernel_realme_RMX1911 kernel/realme/${DEVICE}
-
-# See whta's inside
-#echo -e "\n" && ls -lA .
+git clone --depth 1 https://github.com/abhi9960/kernel_realme_RMX1911 kernel/realme/${DEVICE}
 
 echo -e "setting up envernment for building recovery.....\n"
 export ALLOW_MISSING_DEPENDENCIES=true
