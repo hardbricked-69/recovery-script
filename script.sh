@@ -107,7 +107,7 @@ kill -s SIGTERM $(cat /tmp/keepalive.pid)
 echo -e "syncing done succesfully......\n"
 
 echo -e "\n cloning device tree and kernel tree on right place.....\n"
-git clone https://github.com/abhi9960/twrp_rmx1925 -b ofox device/realme/${DEVICE}
+git clone https://github.com/abhi9960/twrp_rmx1925 -b broken-ofox device/realme/${DEVICE}
 git clone --depth 1 https://github.com/abhi9960/kernel_realme_RMX1911 kernel/realme/${DEVICE}
 
 echo -e "setting up envernment for building recovery.....\n"
