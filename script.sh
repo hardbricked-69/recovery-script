@@ -68,34 +68,29 @@ curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
 chmod a+x ~/bin/repo
 export PATH=~/bin:$PATH
 
-go get -u github.com/tcnksm/ghr
+#go get -u github.com/tcnksm/ghr
 
 #echo -e "setting up github....... \n" 
 #git config --global user.email "${GIT_EMAIL}"
 #git config --global user.name "${GIT_NAME}"
-#git config --global color.ui true 
+git config --global color.ui false 
 
-#git clone -q https://$GITHUB_TOKEN@github.com/PitchBlackRecoveryProject/google-git-cookies.git
-
-#bash google-git-cookies/setup_cookies.sh
-
-#rm -rf google-git-cookies
-#[[ ! -d /tmp ]] && mkdir -p /tmp
-# Make a keepalive shell so that it can bypass CI Termination on output freeze
-#cat << EOF > /tmp/keepalive.sh
+[[ ! -d /tmp ]] && mkdir -p /tmp
+#Make a keepalive shell so that it can bypass CI Termination on output freeze
+cat << EOF > /tmp/keepalive.sh
 #!/bin/bash
-#echo \$$ > /tmp/keepalive.pid # keep this so that it can be killed from other command
-#while true; do
-#  echo "." && sleep 300
-#done
-#EOF
-#chmod a+x /tmp/keepalive.sh
+echo \$$ > /tmp/keepalive.pid # keep this so that it can be killed from other command
+while true; do
+ echo "." && sleep 300
+done
+EOF
+chmod a+x /tmp/keepalive.sh
 
-#echo -e "going to default directory...\n"
-#cd ~
+echo -e "going to default directory...\n"
+cd ~ \
 DIR=$(pwd)
+mkdir $(pwd)/ofox && cd ofox
 
-mkdir $(pwd)/android && cd android
 # randomize and fix sync thread number, according to available cpu thread count
 
 SYNCTHREAD=$(grep -c ^processor /proc/cpuinfo)          # Default CPU Thread Count
@@ -109,14 +104,15 @@ elif [[ $(echo ${SYNCTHREAD}) -le 36 ]]; then SYNCTHREAD=$(shuf -i 30-36 -n 1)  
 fi
 
 # sync
-echo -e "Initializing ORANGEFOX repo sync...\n" \
+echo -e "Initializing and syncing ORANGEFOX repo...\n" \
 
 repo init -u https://gitlab.com/OrangeFox/Manifest.git -b ${REC_BRANCH}
-#/tmp/keepalive.sh
-repo sync --force-sync -j${SYNCTHREAD} #THREADCOUNT is only 2 in remote docker
-#kill -s SIGTERM $(cat /tmp/keepalive.pid)
+/tmp/keepalive.sh & repo sync --force-sync -j${SYNCTHREAD} #THREADCOUNT is only 2 in remote docker
+kill -s SIGTERM $(cat /tmp/keepalive.pid)
 
-echo -e "cloning device tree and kernel tree on right place....."
+echo -e "syncing done succesfully......\n"
+
+echo -e "\n cloning device tree and kernel tree on right place.....\n"
 git clone https://github.com/abhi9960/twrp_rmx1925 -b ofox device/realme/${DEVICE}
 git clone https://github.com/abhi9960/kernel_realme_RMX1911 kernel/realme/${DEVICE}
 
@@ -128,16 +124,15 @@ export ALLOW_MISSING_DEPENDENCIES=true
 export LC_ALL=C 
 source build/envsetup.sh
 
-echo -e "finally lets cook something yummy prepare for lunch...\n"
+echo -e "finally lets cook something yummyyyy!!!! prepare to lunch...\n"
 if [[ -n $BUILD_LUNCH ]]; then
   lunch ${BUILD_LUNCH}
 elif [[ -n $FLAVOR ]]; then
   lunch omni_${DEVICE}-${FLAVOR}
 fi
 
-#/tmp/keepalive.sh &
-make -j$(nproc --all) recoveryimage
-#kill -s SIGTERM $(cat /tmp/keepalive.pid)
+/tmp/keepalive.sh & make -j$(nproc --all) recoveryimage
+kill -s SIGTERM $(cat /tmp/keepalive.pid)
 echo -e "\nYummy Recovery is Served.....\n"
 
 echo -e "fixing conflict from noob thank uh...\n"
