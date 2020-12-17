@@ -105,8 +105,8 @@ fi
 # sync
 echo -e "Initializing and syncing ORANGEFOX repo...\n" \
 
-repo init -u https://gitlab.com/OrangeFox/Manifest.git -b ${REC_BRANCH}
-/tmp/keepalive.sh & repo sync --force-sync -j${SYNCTHREAD} #THREADCOUNT is only 2 in remote docker
+repo init -u https://gitlab.com/OrangeFox/Manifest.git -b ${REC_BRANCH} --depth 1
+/tmp/keepalive.sh & repo sync --force-sync --no-tags --no-clone-bundle --prune --optimized-fetch -j${SYNCTHREAD} #THREADCOUNT is only 2 in remote docker
 kill -s SIGTERM $(cat /tmp/keepalive.pid)
 
 echo -e "syncing done succesfully......\n"
