@@ -88,7 +88,8 @@ chmod a+x /tmp/keepalive.sh
 
 echo -e "going to default directory...\n"
 cd \
-echo -e "\n"
+
+
 DIR=$(pwd)
 mkdir $(pwd)/ofox && cd ofox
 
