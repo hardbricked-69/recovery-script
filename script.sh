@@ -48,6 +48,8 @@
             rsync \
             golang-go
             
+apt-get update && apt-get install -y libssl-dev libssl1.0.0
+
 echo -e "sanity checks.....\n" \
 
 if [[ -z $GIT_EMAIL ]]; then echo -e "You haven't configured GitHub E-Mail Address." && exit 1; fi
