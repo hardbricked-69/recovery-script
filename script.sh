@@ -100,17 +100,17 @@ elif [[ $(echo ${SYNCTHREAD}) -le 36 ]]; then SYNCTHREAD=$(shuf -i 30-36 -n 1)  
 fi
 
 # sync
-echo -e "Initializing and syncing ORANGEFOX repo...\n" \
+echo -e "Initializing and syncing SHRP repo...\n" \
 
-repo init -u https://gitlab.com/OrangeFox/Manifest.git -b ${REC_BRANCH} --depth 1
-/tmp/keepalive.sh & repo sync --force-sync --no-tags --no-clone-bundle --prune --optimized-fetch -j${SYNCTHREAD} #THREADCOUNT is only 2 in remote docker
+repo init -u git://github.com/SHRP/manifest.git -b v3_11.0
+/tmp/keepalive.sh & repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
 kill -s SIGTERM $(cat /tmp/keepalive.pid)
 
 echo -e "syncing done succesfully......\n"
 
 echo -e "\n cloning device tree and kernel tree on right place.....\n"
-git clone https://github.com/abhi9960/twrp_rmx1925 -b broken-ofox device/realme/${DEVICE}
-git clone --depth 1 https://github.com/abhi9960/kernel_realme_RMX1911 kernel/realme/${DEVICE}
+git clone https://github.com/eun0115/android-recovery_device-r5x device/realme/${DEVICE}
+git clone --depth 1 https://github.com/KharaMe-devices/kernel_realme_r5x kernel/realme/${DEVICE}
 
 echo -e "setting up envernment for building recovery.....\n"
 export ALLOW_MISSING_DEPENDENCIES=true
